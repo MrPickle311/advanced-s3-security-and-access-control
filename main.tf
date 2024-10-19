@@ -10,7 +10,7 @@ terraform {
 
 provider "aws" {
   alias  = "replica_region"
-  region = "eu-central-1"
+  region = var.region
 }
 
 # Create S3 buckets
@@ -142,7 +142,7 @@ data "aws_iam_policy_document" "aws_s3_bucket_policy_data" {
     actions = ["s3:DeleteObject"]
     resources = ["${aws_s3_bucket.bucket_3.arn}/*"]
     condition {
-      test     = "ForAnyValue:StringNotEquals"
+      test = "ForAnyValue:StringNotEquals"
       values = [
         "arn:aws:iam::${var.account_id}:root"
       ]

@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
   name              = "/aws/cloudtrail/s3-data-events-trail"
-  retention_in_days = 90  # Adjust retention period as needed
+  retention_in_days = 90
 }
 
 resource "aws_iam_role" "cloudtrail_cloudwatch_role" {

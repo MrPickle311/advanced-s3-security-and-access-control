@@ -87,7 +87,7 @@ resource "aws_iam_role_policy" "replication_policy" {
         "Effect" : "Allow",
         "Condition" : {
           "StringLike" : {
-            "kms:ViaService" : "s3.eu-central-1.amazonaws.com",
+            "kms:ViaService" : "s3.${data.aws_region.current}.amazonaws.com",
             "kms:EncryptionContext:aws:s3:arn" : [
               aws_s3_bucket.bucket_2.arn
             ]
@@ -104,7 +104,7 @@ resource "aws_iam_role_policy" "replication_policy" {
         "Effect" : "Allow",
         "Condition" : {
           "StringLike" : {
-            "kms:ViaService" : "s3.eu-central-1.amazonaws.com",
+            "kms:ViaService" : "s3.${data.aws_region.current}.amazonaws.com",
             "kms:EncryptionContext:aws:s3:arn" : [
               aws_s3_bucket.bucket_2_replica.arn
             ]
@@ -118,7 +118,6 @@ resource "aws_iam_role_policy" "replication_policy" {
   })
 }
 
-# Create the DataAnalyticsRole
 resource "aws_iam_role" "data_analytics_role" {
   name = "DataAnalyticsRole"
 
@@ -140,7 +139,6 @@ resource "aws_iam_role" "data_analytics_role" {
   }
 }
 
-# Create an IAM policy for the DataAnalyticsRole
 resource "aws_iam_policy" "data_analytics_policy" {
   name        = "DataAnalyticsPolicy"
   path        = "/"
@@ -165,7 +163,6 @@ resource "aws_iam_policy" "data_analytics_policy" {
   })
 }
 
-# Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "data_analytics_policy_attachment" {
   role       = aws_iam_role.data_analytics_role.name
   policy_arn = aws_iam_policy.data_analytics_policy.arn
